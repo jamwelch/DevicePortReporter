@@ -1,5 +1,19 @@
 # Device Port Reporter
 
+> **📍 Repository relocation notice**
+>
+> This project is in the process of being migrated to Cisco's internal
+> GitHub Enterprise. **Cisco employees should use the internal repo going
+> forward:**
+>
+> **➡ https://wwwin-github.cisco.com/jamwelch/DevicePortReporter**
+>
+> The public mirror at `github.com/jamwelch/DevicePortReporter` is being
+> archived and will no longer receive updates. Clone from the internal
+> URL above to get the latest code.
+
+---
+
 > **🔒 Restricted-data guarantee (read this first)**
 >
 > Uploaded configurations, parsed reports, and exported XLSX files are
