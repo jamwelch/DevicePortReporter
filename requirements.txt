@@ -1,0 +1,7 @@
+# Device Port Reporter — minimal runtime dependencies.
+#
+# The CLI only needs openpyxl (for XLSX output). CSV mode works with
+# zero third-party packages. The web UI additionally needs Flask.
+
+openpyxl>=3.1.5
+flask>=3.0.0

@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "device-port-reporter"
+version = "1.0.0"
+description = "Parse Cisco NX-OS / IOS 'show running-config' captures into Excel reports (CLI + local web UI). Restricted-data safe — nothing leaves the host."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "James Welch" }]
+keywords = ["cisco", "nxos", "ios", "nexus", "running-config", "ports", "vlans", "report", "network"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Environment :: Web Environment",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: System :: Networking",
+    "Topic :: System :: Networking :: Monitoring",
+]
+dependencies = [
+    "openpyxl>=3.1.5",
+    "flask>=3.0.0",
+]
+
+[project.scripts]
+# After `pip install -e .`, these shortcuts work from any cwd:
+device-port-reporter       = "device_port_reporter:main"
+device-port-reporter-web   = "web.app:main"
+
+[project.urls]
+"Documentation" = "./README.md"
+
+[tool.setuptools]
+# Flat layout: the parser is a single top-level module, and the web UI
+# lives in the ``web`` package next to it.
+py-modules = ["device_port_reporter"]
+
+[tool.setuptools.packages.find]
+include = ["web*"]
+
+[tool.setuptools.package-data]
+"web" = ["templates/*.html", "static/*.css", "static/*.js"]

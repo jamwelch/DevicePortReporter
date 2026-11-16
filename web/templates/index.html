@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Device Port Reporter</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <span class="brand-mark">⚡</span>
+      <div>
+        <h1>Device Port Reporter</h1>
+        <p class="subtitle">NX-OS / IOS <code>show running-config</code> &rarr; spreadsheet</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <span class="privacy-badge" title="Uploaded configs, parsed reports and exported XLSX files are never written to disk or sent off this host.">
+        🔒 Local only
+      </span>
+      <button id="btn-reset" class="btn btn-ghost" hidden>↺ Upload another</button>
+      <button id="btn-download" class="btn btn-primary" hidden>⬇ Download XLSX</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- ============ Upload screen ============ -->
+    <section id="upload-view">
+      <div id="dropzone" class="dropzone" tabindex="0" role="button"
+           aria-label="Upload Cisco running config">
+        <div class="dz-icon">📄</div>
+        <h2>Drop your <code>show running-config</code> here</h2>
+        <p>or <label for="file-input" class="file-pick">click to browse</label></p>
+        <p class="dz-hint">
+          Plain text, up to {{ max_mb }} MB. Full configs or
+          <code>show running-config interface</code> excerpts both work.
+        </p>
+        <input id="file-input" type="file"
+               accept=".txt,.cfg,.conf,.log,.nxos,.ios,text/plain" hidden />
+      </div>
+      <div class="privacy-note">
+        🔒 <strong>Restricted-data safe.</strong> Your configuration is
+        parsed entirely in memory on this machine. Nothing is written to
+        disk, cached by the browser, or sent over the network — not even
+        for diagnostics.
+      </div>
+      <div id="upload-error" class="alert alert-error" hidden></div>
+      <div id="upload-progress" class="progress" hidden>
+        <div class="progress-bar"></div>
+        <span>Parsing…</span>
+      </div>
+    </section>
+
+    <!-- ============ Results screen ============ -->
+    <section id="results-view" hidden>
+      <div id="source-banner" class="source-banner"></div>
+
+      <!-- KPIs -->
+      <div class="kpi-grid" id="kpi-grid"></div>
+
+      <!-- VLAN usage chart -->
+      <div class="panel">
+        <div class="panel-head">
+          <h3>Top VLANs by port count</h3>
+          <span id="vlan-caption" class="panel-caption"></span>
+        </div>
+        <div id="vlan-chart" class="vlan-chart"></div>
+      </div>
+
+      <!-- Interface table -->
+      <div class="panel">
+        <div class="panel-head tabs-head">
+          <div class="tabs" role="tablist">
+            <button class="tab is-active" data-filter="all" role="tab">
+              All <span class="tab-count" id="count-all">0</span>
+            </button>
+            <button class="tab" data-filter="trunk" role="tab">
+              Trunks <span class="tab-count" id="count-trunk">0</span>
+            </button>
+            <button class="tab" data-filter="access" role="tab">
+              Access <span class="tab-count" id="count-access">0</span>
+            </button>
+            <button class="tab" data-filter="routed" role="tab">
+              Routed / L3 <span class="tab-count" id="count-routed">0</span>
+            </button>
+            <button class="tab" data-filter="shutdown" role="tab">
+              Shutdown <span class="tab-count" id="count-shutdown">0</span>
+            </button>
+          </div>
+          <input id="search-input" class="search" type="search"
+                 placeholder="Filter by interface, VLAN, description…"
+                 autocomplete="off" />
+        </div>
+        <div class="table-wrap">
+          <table id="iface-table" class="iface-table">
+            <thead></thead>
+            <tbody></tbody>
+          </table>
+          <div id="empty-state" class="empty-state" hidden>
+            No interfaces match the current filter.
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <small>
+      🔒 <strong>Local only:</strong> uploaded configs, parsed reports,
+      and exported XLSX files are processed in memory on this machine.
+      Nothing is written to disk, cached, logged, or transmitted off
+      <code>127.0.0.1</code>. Powered by <code>device_port_reporter</code>.
+    </small>
+  </footer>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+# ---------------------------------------------------------------------------
+# Python
+# ---------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ---------------------------------------------------------------------------
+# Build artifacts
+# ---------------------------------------------------------------------------
+build/
+dist/
+*.egg-info/
+
+# ---------------------------------------------------------------------------
+# IDE / OS
+# ---------------------------------------------------------------------------
+.vscode/
+.idea/
+*.swp
+Thumbs.db
+.DS_Store
+
+# ---------------------------------------------------------------------------
+# Environment & secrets
+# ---------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+
+# ---------------------------------------------------------------------------
+# Device Port Reporter — restricted-data safeguards.
+#
+# Customer policy: no customer-supplied running-config, parsed report,
+# or exported XLSX may ever be committed to the repo. These patterns
+# block the common ways such files could sneak in — files a user might
+# drag into the project, test outputs written by the CLI, or server
+# logs that might capture diagnostics.
+#
+# The ONLY intentionally-tracked user-ish file is example_show_run.txt,
+# which is a synthetic sample (no real device data). It is re-allowed
+# at the bottom of this block.
+# ---------------------------------------------------------------------------
+**/*.xlsx
+**/*.xls
+**/*.csv
+**/*.cfg
+**/*.conf
+**/*.nxos
+**/*.ios
+**/*.log
+**/*.err
+**/*show*run*.txt
+**/*show-run*.txt
+**/*show_run*.txt
+**/*running-config*.txt
+**/*running_config*.txt
+uploads/
+output/
+tmp/
+web/uploads/
+web/output/
+web/tmp/
+
+# Explicitly re-allow the synthetic sample (safe to ship).
+!example_show_run.txt
